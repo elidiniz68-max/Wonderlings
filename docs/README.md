@@ -1,38 +1,29 @@
-# 🌌 WONDERLINGS — Play. Discover. Grow.
+# Wonderlings — Master Plan Index
 
-An educational adventure for ages 5–15 where **knowledge is the player's
-superpower**. Kids explore fading worlds with Milo the fox, complete
-story-driven mini-game missions to restore them, earn XP and WonderCoins,
-and hatch creature companions.
+The complete 10-step product plan. Each doc is a buildable spec; together
+they're the blueprint from prototype to v1.
 
-> "Don't build a collection of quizzes. Build an adventure where knowledge
-> is the player's superpower."
+| Step | Doc | Status |
+|---|---|---|
+| 1 | [SCREEN_FLOW.md](SCREEN_FLOW.md) — full blueprint: flow (Part A) + button-level spec, 3 age-band UI systems, edge states, v5 coverage (Part B) | ✅ locked |
+| 2 | [VISUAL_IDENTITY.md](VISUAL_IDENTITY.md) — logo, Milo, 5 creatures, 3 age-band themes | ✅ locked |
+| 3 | Prototype — [wonderlings-v5.html](../wonderlings-v5.html) — Number Nebula + Storywood playable, all 6 mini-games, 44/44 tests | ✅ shipped |
+| 4 | Step-4 polish — folded into the v4 build (power meter, alien counting, streaks, real XP rewards) | ✅ shipped |
+| 5 | [CURRICULUM.md](CURRICULUM.md) — can-do objectives per band per world, coverage map, mastery rules | ✅ locked |
+| 6 | [MINI_GAMES.md](MINI_GAMES.md) — rules, round loops, difficulty, animations, replay for all 6 games | ✅ locked |
+| 7 | [WONDERLINGS.md](WONDERLINGS.md) — 5 creature sheets, talents, rarity, evolutions, bond, expansion | ✅ locked |
+| 8 | [ECONOMY.md](ECONOMY.md) — XP curve, coins, badges, punishment-free loops, Plus/free split | ✅ locked |
+| 9 | [PARENT_EXPERIENCE.md](PARENT_EXPERIENCE.md) — dashboard, controls, trust copy, compliance checklist | ✅ locked |
+| 10 | [TECHNICAL_BUILD.md](TECHNICAL_BUILD.md) — Flutter/Firebase stack, schema, roadmap to beta | ✅ locked |
+| 11 | [TESTING.md](TESTING.md) — Step 12: per-band test scripts, parent track, metrics, triage, timeline | ✅ locked |
+| 12 | [UI_MOCKUP_SPEC.md](UI_MOCKUP_SPEC.md) — per-band visual designs for 8 key screens + Figma production order | ✅ locked |
 
-## Play it now
+**The product in one paragraph.** Wonderlings is an educational adventure
+for ages 5–15 where knowledge is the player's superpower: kids explore
+fading worlds with Milo the fox, complete story-driven mini-game missions
+to restore them, earn XP and WonderCoins, and hatch creature companions —
+with age-adaptive difficulty, a punishment-free economy, and a parent
+experience built on trust.
 
-Open **`wonderlings-v5.html`** in any browser (iPad-friendly, works
-offline). No build step, no server.
-
-## What's in v5
-
-- **Number Nebula** (Logic) and **Storywood** (Language) — fully playable
-- All **6 mini-games**, one per age band per subject:
-  - 🔢 Alien Boarding · ⚡ Power Grid · 🔧 Reactor Core (math)
-  - 🌸 Rhyme Grove · 🌉 Word Bridge · 🔍 Tale Detective (reading)
-- 5 Wonderlings to hatch, XP/levels, WonderCoins, mystery eggs
-- Milo the fox with his cartoon voice (TTS, pitch 1.7)
-
-## Develop
-
-Source lives in `index.html` + `style.css` + `game.js`.
-
-```bash
-node tests/test-game.js   # regression harness (44 checks)
-./build.sh 5              # rebuild the standalone file (version must match the footer in index.html)
-```
-
-## The plan
-
-The full 10-step product blueprint — curriculum, mini-game designs,
-creature system, economy, parent experience, technical build — lives in
-[`docs/`](docs/README.md).
+**What's next:** pick a phase from TECHNICAL_BUILD.md §7 and start.
+Recommended: Phase 0 (foundation) + content authoring in parallel.
