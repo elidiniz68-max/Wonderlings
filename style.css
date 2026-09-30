@@ -1,0 +1,303 @@
+/* WONDERLINGS prototype styles — one file, three age-band themes.
+   The band re-skins the whole universe: bright for Explorers,
+   adventure blues for Adventurers, dark neon for Legends. */
+
+:root {
+  --bg: linear-gradient(160deg, #7b2ff7, #f107a3);
+  --ink: #ffffff;
+  --card: rgba(255, 255, 255, 0.16);
+  --card-border: rgba(255, 255, 255, 0.35);
+  --accent: #ffd93d;
+  --btn: #ff6b9d;
+}
+body.band-adventurer {
+  --bg: linear-gradient(160deg, #0f2027, #203a43, #2c5364);
+  --accent: #4dd0e1;
+  --btn: #2196f3;
+}
+body.band-legend {
+  --bg: linear-gradient(160deg, #0b0b1a, #1a1a2e);
+  --ink: #e8e8ff;
+  --card: rgba(120, 80, 255, 0.12);
+  --card-border: rgba(150, 100, 255, 0.45);
+  --accent: #c26bff;
+  --btn: #7b2ff7;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: "Comic Sans MS", "Chalkboard SE", "Segoe UI", sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+}
+#app { width: 100%; max-width: 560px; }
+
+/* Screens: only one visible at a time */
+.screen { display: none; text-align: center; animation: screenIn 0.35s ease-out; }
+.screen.active { display: block; }
+@keyframes screenIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Buttons: big, thumb-friendly, and they SQUISH when tapped */
+button {
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  background: var(--btn);
+  border: none;
+  border-radius: 18px;
+  padding: 14px 26px;
+  margin: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25);
+  transition: transform 0.08s;
+}
+button:active { transform: scale(0.93); } /* the squish! */
+button.ghost {
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  box-shadow: none;
+}
+input {
+  font-family: inherit;
+  font-size: 20px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 3px solid var(--card-border);
+  width: 80%;
+  max-width: 320px;
+  text-align: center;
+}
+
+/* Cards */
+.card {
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  border-radius: 20px;
+  padding: 18px;
+  margin: 12px 0;
+  backdrop-filter: blur(4px);
+}
+
+/* Title screen */
+#logo { font-size: 64px; margin: 26px 0 4px; animation: float 3s ease-in-out infinite; }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+#tagline { font-size: 20px; letter-spacing: 3px; opacity: 0.9; }
+
+/* Band picker */
+.band-card {
+  font-size: 18px;
+  padding: 14px;
+  margin: 8px 0;
+  text-align: left;
+}
+.band-card.selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 18px var(--accent);
+  transform: scale(1.02);
+}
+.band-card .big { font-size: 30px; margin-right: 8px; }
+
+/* Avatar picker */
+.avatar { font-size: 40px; padding: 8px; border-radius: 14px; cursor: pointer; }
+.avatar.selected { background: var(--card); box-shadow: 0 0 14px var(--accent); }
+
+/* Milo + dialogue */
+#milo-row, .milo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  text-align: left;
+}
+.milo-face {
+  font-size: 56px;
+  animation: float 3s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.speech {
+  background: #fff;
+  color: #333;
+  border-radius: 16px;
+  padding: 12px 16px;
+  font-size: 18px;
+  position: relative;
+  flex: 1;
+}
+.speech::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 22px;
+  border: 10px solid transparent;
+  border-right-color: #fff;
+  border-left: none;
+}
+
+/* HUD */
+#hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 17px;
+  font-weight: bold;
+  padding: 8px 4px;
+}
+#xpbar {
+  height: 14px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 4px 0 10px;
+}
+#xpfill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), #ff9a3d);
+  border-radius: 8px;
+  transition: width 0.6s ease-out;
+}
+
+/* World map */
+.world-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.world {
+  font-size: 17px;
+  padding: 20px 8px;
+  cursor: pointer;
+}
+.world small { display: block; font-size: 13px; opacity: 0.85; margin-top: 6px; }
+.world.locked { opacity: 0.45; filter: grayscale(0.7); cursor: default; }
+.world .wicon { font-size: 44px; }
+
+/* Mission */
+#qProgress { font-size: 16px; opacity: 0.9; }
+#powerLabel { font-size: 13px; letter-spacing: 2px; opacity: 0.85; margin-top: 6px; }
+#powerBar {
+  height: 16px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 9px;
+  overflow: hidden;
+  margin: 4px 0 6px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+#powerFill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ffd93d, #ff9a3d, #ff6b9d);
+  border-radius: 9px;
+  transition: width 0.5s ease-out;
+}
+#powerFill.surge { animation: surge 0.5s ease-out; }
+@keyframes surge {
+  0% { filter: brightness(1); }
+  40% { filter: brightness(1.8); }
+  100% { filter: brightness(1); }
+}
+/* Alien Boarding sky: floating aliens to count */
+#alienSky { font-size: 42px; line-height: 1.35; min-height: 10px; margin-bottom: 4px; }
+#alienSky span {
+  display: inline-block;
+  animation: alienFloat 2.4s ease-in-out infinite;
+}
+#alienSky span.leaving { opacity: 0.3; filter: grayscale(1); }
+@keyframes alienFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+#qPrompt { font-size: 30px; margin: 18px 0; line-height: 1.5; }
+.choice {
+  display: block;
+  width: 100%;
+  font-size: 26px;
+}
+.choice.correct { background: #4caf50; }
+.choice.wrong { background: #e53935; animation: shake 0.4s; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+/* Reactor cinematic */
+#reactorBolt { font-size: 110px; animation: boltPulse 0.7s ease-in-out infinite; }
+@keyframes boltPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px gold); }
+  50% { transform: scale(1.25); filter: drop-shadow(0 0 30px gold); }
+}
+
+/* Rewards */
+.reward { font-size: 22px; padding: 14px; }
+.reward .big { font-size: 46px; }
+
+/* Egg hatch */
+#egg { font-size: 120px; cursor: pointer; display: inline-block; }
+#egg.wiggle { animation: eggWiggle 0.5s; }
+@keyframes eggWiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-12deg); }
+  75% { transform: rotate(12deg); }
+}
+#hatchResult { font-size: 120px; animation: chestPop 0.6s ease-out; }
+@keyframes chestPop {
+  0% { transform: scale(0.2); }
+  60% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+.evo-note { font-size: 14px; opacity: 0.8; }
+
+/* Confetti pieces */
+.confetti {
+  position: fixed;
+  top: -20px;
+  font-size: 22px;
+  z-index: 99;
+  pointer-events: none;
+  animation: fall linear forwards;
+}
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(360deg); }
+}
+
+/* Version footer */
+#ver { font-size: 12px; opacity: 0.5; margin-top: 18px; }
+
+/* v5 mini-games */
+/* M2 Power Grid: tappable nodes */
+#choices.node-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.choice.node { font-size: 34px; padding: 28px 10px; border-radius: 20px; }
+.choice.node.correct { animation: nodeIgnite 0.6s ease-out; box-shadow: 0 0 26px gold; }
+@keyframes nodeIgnite {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.14); }
+  100% { transform: scale(1); }
+}
+/* M3 Reactor Core: first-move buttons */
+.choice.move-btn { display: block; width: 100%; margin: 8px 0; font-size: 20px; }
+/* R1 Rhyme Grove: big flower cards + hear-it button */
+.choice.grove-card { font-size: 24px; padding: 18px 12px; }
+.choice.grove-card .gicon { font-size: 46px; display: block; margin-bottom: 6px; }
+#hearBtn { margin: 10px auto; display: block; }
+/* R2 Word Bridge: planks fill as you answer */
+.bridge { font-size: 36px; letter-spacing: 4px; line-height: 1.4; }
+/* R3 Tale Detective: tappable case file */
+.dossier { text-align: left; background: rgba(255,255,255,0.55); border-radius: 14px; padding: 12px; }
+.ev-line { padding: 10px 12px; border-radius: 10px; margin: 8px 0; cursor: pointer;
+  border: 2px solid transparent; background: rgba(255,255,255,0.5); }
+.ev-line.correct { background: #c8f0c8; border-color: #4a4; }
+.ev-line.wrong { background: #f6d2d2; border-color: #c66; animation: shake 0.4s; }

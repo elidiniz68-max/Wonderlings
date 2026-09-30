@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <title>Wonderlings — Play. Discover. Grow.</title>
+</head>
+<body>
+<div id="app">
+
+  <!-- TITLE -->
+  <div class="screen" id="scr-title">
+    <div id="logo">🌌</div>
+    <h1>WONDERLINGS</h1>
+    <div id="tagline">PLAY · DISCOVER · GROW</div>
+    <div class="card">A living universe where <b>knowledge is your superpower</b>. The Fade is draining the Knowledge Cores… and only a Wonder Explorer can stop it.</div>
+    <button id="titleBtn" onclick="onTitle()">✨ Begin Adventure</button>
+    <br><button class="ghost" id="soundBtn" onclick="toggleSound()">🔊 Sound: on</button>
+  </div>
+
+  <!-- PROFILE: name + age band + avatar -->
+  <div class="screen" id="scr-profile">
+    <h2>Who's going exploring today?</h2>
+    <input id="nameInput" placeholder="Your explorer name" maxlength="16">
+    <h3>Choose your path</h3>
+    <div id="bandCards">
+      <button class="ghost band-card" id="band-explorer" onclick="selectBand('explorer')">
+        <span class="big">🌱</span><b>Explorer</b> · ages 5–7<br><small>Big buttons, read-aloud, playful quests</small>
+      </button>
+      <button class="ghost band-card" id="band-adventurer" onclick="selectBand('adventurer')">
+        <span class="big">⚡</span><b>Adventurer</b> · ages 8–11<br><small>Game-like missions, trickier challenges</small>
+      </button>
+      <button class="ghost band-card" id="band-legend" onclick="selectBand('legend')">
+        <span class="big">🔥</span><b>Legend</b> · ages 12–15<br><small>Real stakes, cinematic style</small>
+      </button>
+    </div>
+    <h3>Pick your hero</h3>
+    <div id="avatarRow">
+      <span class="avatar" onclick="selectAvatar('🦊', this)">🦊</span>
+      <span class="avatar" onclick="selectAvatar('🦁', this)">🦁</span>
+      <span class="avatar" onclick="selectAvatar('🐼', this)">🐼</span>
+      <span class="avatar" onclick="selectAvatar('🐸', this)">🐸</span>
+      <span class="avatar" onclick="selectAvatar('🦄', this)">🦄</span>
+      <span class="avatar" onclick="selectAvatar('🐲', this)">🐲</span>
+    </div>
+    <br><button onclick="beginAdventure()">🚀 Let's Go!</button>
+  </div>
+
+  <!-- STORY -->
+  <div class="screen" id="scr-story">
+    <div class="milo-row">
+      <div class="milo-face">🦊</div>
+      <div class="speech" id="storySpeech"></div>
+    </div>
+    <button onclick="nextStory()">Next ▶</button>
+  </div>
+
+  <!-- WORLD MAP -->
+  <div class="screen" id="scr-map">
+    <div id="hud">
+      <span id="hudLevel">LV 1</span>
+      <span id="hudCoins">🪙 0</span>
+    </div>
+    <div id="xpbar"><div id="xpfill"></div></div>
+    <h2>🗺️ The Wonderverse</h2>
+    <div class="world-grid">
+      <button class="ghost world" onclick="enterWorld('nebula')">
+        <div class="wicon">🔢</div>Number Nebula<small id="nebulaStatus">🚨 needs help!</small>
+      </button>
+      <button class="ghost world" onclick="enterWorld('storywood')">
+        <div class="wicon">📚</div>Storywood<small id="storyStatus">🍂 leaves fading!</small>
+      </button>
+      <button class="ghost world locked"><div class="wicon">🧪</div>Discovery Island<small>🔒 coming soon</small></button>
+      <button class="ghost world locked"><div class="wicon">🧩</div>Puzzle Peaks<small>🔒 coming soon</small></button>
+      <button class="ghost world locked"><div class="wicon">💻</div>Cyber City<small>🔒 coming soon</small></button>
+      <button class="ghost world locked"><div class="wicon">💰</div>Venture Valley<small>🔒 coming soon</small></button>
+      <button class="ghost world locked"><div class="wicon">🎨</div>Imagination Kingdom<small>🔒 coming soon</small></button>
+      <button class="ghost world locked"><div class="wicon">🌎</div>LifeQuest<small>🔒 coming soon</small></button>
+    </div>
+    <br><button class="ghost" onclick="showScreen('scr-home')">🏠 Home</button>
+  </div>
+
+  <!-- MISSION -->
+  <div class="screen" id="scr-mission">
+    <div id="qProgress">Challenge 1 of 5</div>
+    <div id="powerLabel">⚡ REACTOR POWER</div>
+    <div id="powerBar"><div id="powerFill"></div></div>
+    <div class="milo-row">
+      <div class="milo-face">🦊</div>
+      <div class="speech" id="missionSpeech"></div>
+    </div>
+    <div class="card"><div id="alienSky"></div><div id="qPrompt"></div></div>
+    <button id="hearBtn" class="ghost" style="display:none" onclick="hearPrompt()">🔊 Hear it again</button>
+    <div id="choices"></div>
+  </div>
+
+  <!-- WORLD RESTORED CINEMATIC -->
+  <div class="screen" id="scr-reactor">
+    <div id="cinematicIcon">⚡</div>
+    <h2 id="reactorText">RESTORING…</h2>
+    <button onclick="showRewards()">Continue ▶</button>
+  </div>
+
+  <!-- REWARDS -->
+  <div class="screen" id="scr-rewards">
+    <h2>🏆 Mission Complete!</h2>
+    <div class="card reward"><div class="big">✨</div><span id="rewardXP">+250 XP</span></div>
+    <div class="card reward"><div class="big">🪙</div><span id="rewardCoins">+100 WonderCoins</span></div>
+    <div class="card reward"><div class="big">🥚</div>A MYSTERY EGG!</div>
+    <button onclick="showScreen('scr-hatch'); resetEgg(lastPet)">Open the egg 🥚</button>
+  </div>
+
+  <!-- EGG HATCH -->
+  <div class="screen" id="scr-hatch">
+    <h2>Something's moving inside…</h2>
+    <div id="egg" onclick="tapEgg()">🥚</div>
+    <div id="eggHint">👆 Tap the egg! (<span id="tapsLeft">3</span> taps left)</div>
+    <div id="hatchResult" style="display:none">🔥</div>
+    <div id="hatchText"></div>
+    <button id="meetBtn" style="display:none" onclick="meetPet()">Say hi! 🔥</button>
+  </div>
+
+  <!-- HOME -->
+  <div class="screen" id="scr-home">
+    <div id="hud2">
+      <div id="hud">
+        <span id="hudLevel2">LV 1</span>
+        <span id="hudAvatar">🦊</span>
+        <span id="hudCoins2">🪙 0</span>
+      </div>
+      <div id="xpbar"><div id="xpfill2"></div></div>
+    </div>
+    <div class="milo-row">
+      <div class="milo-face">🦊</div>
+      <div class="speech" id="homeSpeech"></div>
+    </div>
+    <div class="card" id="companionCard">🐾 No Wonderling yet…</div>
+    <button onclick="showScreen('scr-map'); renderMap()">🗺️ World Map</button>
+    <button class="ghost" onclick="showScreen('scr-pets'); renderPets()">🐾 Wonderlings</button>
+    <br><button class="ghost" id="soundBtn2" onclick="toggleSound()">🔊 Sound: on</button>
+  </div>
+
+  <!-- WONDERLINGS COLLECTION -->
+  <div class="screen" id="scr-pets">
+    <h2>🐾 Your Wonderlings</h2>
+    <div id="petList"></div>
+    <br><button class="ghost" onclick="showScreen('scr-home')">🏠 Home</button>
+  </div>
+
+  <p id="ver">wonderlings v5</p>
+</div>
+<script src="game.js"></script>
+</body>
+</html>
